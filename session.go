@@ -123,7 +123,7 @@ func CheckCurrentServerVersion() ([]int, error) {
 
 	var resp map[string]interface{}
 	if err = json.Unmarshal([]byte(r), &resp); err != nil {
-		return nil, fmt.Errorf("error decoding login: %s", err.Error())
+		return nil, fmt.Errorf("error decoding login: %s (raw response: %s)", err.Error(), r)
 	}
 
 	// Take the curr property as X.Y.Z and split it into as int slice
@@ -228,7 +228,7 @@ func (wac *Conn) Login(qrChan chan<- string) (Session, error) {
 
 	var resp map[string]interface{}
 	if err = json.Unmarshal([]byte(r), &resp); err != nil {
-		return session, fmt.Errorf("error decoding login resp: %v\n", err)
+		return session, fmt.Errorf("error decoding login resp: %v (raw response: %s)\n", err, r)
 	}
 
 	var ref string
@@ -391,7 +391,7 @@ func (wac *Conn) Restore() error {
 	case r := <-initChan:
 		var resp map[string]interface{}
 		if err = json.Unmarshal([]byte(r), &resp); err != nil {
-			return fmt.Errorf("error decoding login connResp: %v\n", err)
+			return fmt.Errorf("error decoding login connResp: %v (raw response: %s)\n", err, r)
 		}
 
 		if int(resp["status"].(float64)) != 200 {
@@ -418,7 +418,7 @@ func (wac *Conn) Restore() error {
 		case r := <-loginChan:
 			var resp map[string]interface{}
 			if err = json.Unmarshal([]byte(r), &resp); err != nil {
-				return fmt.Errorf("error decoding login connResp: %v\n", err)
+				return fmt.Errorf("error decoding login connResp: %v (raw response: %s)\n", err, r)
 			}
 			if int(resp["status"].(float64)) != 200 {
 				return fmt.Errorf("admin login responded with %d", int(resp["status"].(float64)))
@@ -459,7 +459,7 @@ func (wac *Conn) Restore() error {
 		var resp map[string]interface{}
 		if err = json.Unmarshal([]byte(r), &resp); err != nil {
 			wac.timeTag = ""
-			return fmt.Errorf("error decoding login connResp: %v\n", err)
+			return fmt.Errorf("error decoding login connResp: %v (raw response: %s)\n", err, r)
 		}
 
 		if int(resp["status"].(float64)) != 200 {
@@ -503,7 +503,7 @@ func (wac *Conn) resolveChallenge(challenge string) error {
 	case r := <-challengeChan:
 		var resp map[string]interface{}
 		if err := json.Unmarshal([]byte(r), &resp); err != nil {
-			return fmt.Errorf("error decoding login resp: %v\n", err)
+			return fmt.Errorf("error decoding login resp: %v (raw response: %s)\n", err, r)
 		}
 		if int(resp["status"].(float64)) != 200 {
 			return fmt.Errorf("challenge responded with %d\n", resp["status"])
