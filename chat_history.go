@@ -1,8 +1,8 @@
 package whatsapp
 
 import (
-	"github.com/Rhymen/go-whatsapp/binary"
-	"github.com/Rhymen/go-whatsapp/binary/proto"
+	"github.com/pedidopago/go-whatsapp/binary"
+	"github.com/pedidopago/go-whatsapp/binary/proto"
 	"log"
 	"strconv"
 	"time"

@@ -10,9 +10,9 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/Rhymen/go-whatsapp/binary"
-	"github.com/Rhymen/go-whatsapp/crypto/cbc"
 	"github.com/gorilla/websocket"
+	"github.com/pedidopago/go-whatsapp/binary"
+	"github.com/pedidopago/go-whatsapp/crypto/cbc"
 	"github.com/pkg/errors"
 )
 
